@@ -3,12 +3,13 @@ package com.example.productsappwithmvvm.data.repo
 import com.example.productsappwithmvvm.data.local.ProductLocalDataSourceImp
 import com.example.productsappwithmvvm.data.models.Product
 import com.example.productsappwithmvvm.data.remote.ProductRemoteDataSourceImp
+import kotlinx.coroutines.flow.Flow
 
 class ProductRepoImp private constructor(
     private val remoteDataSource: ProductRemoteDataSourceImp,
     private val localDataSource: ProductLocalDataSourceImp,
 ) : ProductRepo {
-    override suspend fun getAllProducts(isOnline: Boolean): List<Product>? {
+    override suspend fun getAllProducts(isOnline: Boolean): Flow<List<Product>>? {
         return if (isOnline) {
             remoteDataSource.getAllProducts()
         } else {
