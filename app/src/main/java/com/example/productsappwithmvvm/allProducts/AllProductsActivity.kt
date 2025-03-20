@@ -53,7 +53,7 @@ class AllProductsActivity : ComponentActivity() {
             ProductsList(
                 viewModel(
                     factory = AllProductsFactory(
-                        ProductRepoImp(
+                        ProductRepoImp.getInstance(
                             ProductRemoteDataSourceImp(RetrofitProduct.apiService),
                             ProductLocalDataSourceImp(
                                 ProductDataBase.getInstance(this).getProductDao()
@@ -65,7 +65,6 @@ class AllProductsActivity : ComponentActivity() {
         }
     }
 }
-
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -103,7 +102,6 @@ fun ProductsList(products: AllProductsViewModel) {
         }
     }
 }
-
 
 @Composable
 fun OneProduct(product: Product?, addToFav: () -> Unit) {

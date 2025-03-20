@@ -41,6 +41,7 @@ class FavoriteProductsViewModel(private val repo: ProductRepo) : ViewModel() {
                 val result = repo.removeProduct(product)
                 if (result > 0) {
                     mutableMessage.postValue("removed Successfully")
+                    getFavProducts()
                 } else {
                     mutableMessage.postValue("Product isn't in the favours")
                 }

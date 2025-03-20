@@ -4,7 +4,7 @@ import com.example.productsappwithmvvm.data.local.ProductLocalDataSourceImp
 import com.example.productsappwithmvvm.data.models.Product
 import com.example.productsappwithmvvm.data.remote.ProductRemoteDataSourceImp
 
-class ProductRepoImp /*private constructor */(
+class ProductRepoImp private constructor(
     private val remoteDataSource: ProductRemoteDataSourceImp,
     private val localDataSource: ProductLocalDataSourceImp,
 ) : ProductRepo {
@@ -24,6 +24,19 @@ class ProductRepoImp /*private constructor */(
         return localDataSource.deleteProduct(product)
     }
 
-    companion object{}
+    companion object {
+        @Volatile
+        private var INSTANCE: ProductRepoImp? = null
+        fun getInstance(
+            remoteDataSource: ProductRemoteDataSourceImp,
+            localDataSource: ProductLocalDataSourceImp,
+        ): ProductRepoImp {
+            return INSTANCE ?: synchronized(this) {
+                val instance = ProductRepoImp(remoteDataSource, localDataSource)
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
 
 }

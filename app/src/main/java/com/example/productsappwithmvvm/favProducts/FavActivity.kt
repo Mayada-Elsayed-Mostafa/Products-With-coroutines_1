@@ -53,7 +53,7 @@ class FavActivity : ComponentActivity() {
             FavProductsList(
                 viewModel(
                     factory = FavProductsFactory(
-                        ProductRepoImp(
+                        ProductRepoImp.getInstance(
                             ProductRemoteDataSourceImp(RetrofitProduct.apiService),
                             ProductLocalDataSourceImp(
                                 ProductDataBase.getInstance(this).getProductDao()
