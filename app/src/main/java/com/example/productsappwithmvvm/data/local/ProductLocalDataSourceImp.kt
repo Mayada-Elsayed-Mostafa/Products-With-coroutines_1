@@ -1,10 +1,11 @@
 package com.example.productsappwithmvvm.data.local
 
 import com.example.productsappwithmvvm.data.models.Product
+import kotlinx.coroutines.flow.Flow
 
 class ProductLocalDataSourceImp(private val dao: ProductDao) : ProductLocalDataSource {
 
-    override suspend fun getFavProducts(): List<Product> {
+    override suspend fun getFavProducts(): Flow<List<Product>> {
         return dao.getFavoriteProducts()
     }
 
