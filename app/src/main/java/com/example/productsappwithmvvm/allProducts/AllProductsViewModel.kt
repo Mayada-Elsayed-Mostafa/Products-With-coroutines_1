@@ -1,22 +1,22 @@
 package com.example.productsappwithmvvm.allProducts
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.productsappwithmvvm.data.models.Product
 import com.example.productsappwithmvvm.data.repo.ProductRepo
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class AllProductsViewModel(private val repo: ProductRepo) : ViewModel() {
 
-    private val mutableProducts: MutableLiveData<List<Product>> = MutableLiveData()
-    val products: LiveData<List<Product>> = mutableProducts
+    private val mutableProducts: MutableStateFlow<List<Product>> = MutableStateFlow(listOf())
+    val products = mutableProducts.asStateFlow()
 
-    private val mutableMessage: MutableLiveData<String> = MutableLiveData()
-    val message: LiveData<String> = mutableMessage
+    private val mutableMessage: MutableStateFlow<String> = MutableStateFlow("")
+    val message = mutableMessage.asStateFlow()
 
     fun getProducts() {
         viewModelScope.launch(Dispatchers.IO) {
